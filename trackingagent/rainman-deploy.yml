@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rainman-deployment
+  labels:
+    app: rainman
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rainman
+  template:
+    metadata:
+      labels:
+        app: rainman
+    spec:
+      containers:
+        - name: rainman
+          image: facilitycountagent_rainman
+          volumeMounts:
+            - name: image-store
+              mountPath: /image_store
+      volumes:
+        - name: image-store
+          persistentVolumeClaim:
+            claimName: my-claim
